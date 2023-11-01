@@ -5,8 +5,8 @@
 #### Run demo
 
 ```
-docker compose -f docker-compose-nosgx.yml build tor
-docker compose -f docker-compose-nosgx.yml run --rm tor bash
+docker compose build tor
+docker compose run --rm tor bash
 //inside the container
 $ cd ../network-torpy
 $ rm -rf shadow.data
@@ -27,8 +27,8 @@ $ cat shadow.data/hosts/{node name}/*.stderr
 #### Run demo
 
 ```
-docker compose -f docker-compose-nosgx.yml build tor
-docker compose -f docker-compose-nosgx.yml run --rm tor bash
+docker compose build tor
+docker compose run --rm tor bash
 //inside the container
 $ rm -rf shadow.data
 $ shadow --template-directory shadow.data.template shadow.yaml > shadow.log

@@ -15,4 +15,5 @@ services:
     volumes:
       - ./network/:/network
       - ./network-torpy/:/network-torpy
-      # - ./torpy/torpy/:/usr/local/lib/python3.8/dist-packages/torpy
+      - ./dirs.py:/usr/local/lib/python3.8/dist-packages/torpy/dirs.py
+      - ./consesus.py:/usr/local/lib/python3.8/dist-packages/torpy/consesus.py

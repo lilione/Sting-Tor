@@ -20,15 +20,6 @@ network:
         ]
       ]
 hosts:
-  myserver:
-    network_node_id: 0
-    processes:
-    - path: python3
-      args: -m http.server 80
-      start_time: 3s
-      # tell shadow to expect this process to still be running at the end of the
-      # simulation
-      expected_final_state: running
   fileserver:
     network_node_id: 0
     processes:
@@ -103,30 +94,16 @@ hosts:
       environment: { OPENBLAS_NUM_THREADS: "1" }
       args: ../../../conf/tgen.client.graphml.xml
       start_time: 600
-  # torclient:
-  #   network_node_id: 0
-  #   processes:
-  #   - path: tor
-  #     args: --Address torclient --Nickname torclient
-  #           --defaults-torrc torrc-defaults -f torrc
-  #     start_time: 900
-  #     expected_final_state: running
-  #   - path: tgen
-  #     # See https://shadow.github.io/docs/guide/compatibility_notes.html#libopenblas
-  #     environment: { OPENBLAS_NUM_THREADS: "1" }
-  #     args: ../../../conf/tgen.torclient.graphml.xml
-  #     start_time: 1500
-  simpleclient:
-    network_node_id: 0
-    processes:
-    - path: curl
-      args: -s myserver
-      start_time: 900
-  sting:
+  torclient:
     network_node_id: 0
     processes:
     - path: tor
-      args: --Address sting --Nickname sting
+      args: --Address torclient --Nickname torclient
             --defaults-torrc torrc-defaults -f torrc
       start_time: 900
       expected_final_state: running
+    - path: tgen
+      # See https://shadow.github.io/docs/guide/compatibility_notes.html#libopenblas
+      environment: { OPENBLAS_NUM_THREADS: "1" }
+      args: ../../../conf/tgen.torclient.graphml.xml
+      start_time: 1500

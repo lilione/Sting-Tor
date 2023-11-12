@@ -3,17 +3,10 @@ version: '3.9'
 services:
   tor:
     security_opt:
-      - seccomp:unconfined    
+      - seccomp:unconfined
     shm_size: 1024g
     build:
       context: ./
-      dockerfile: tor.Dockerfile
-      args:
-        FOO: FOO
-    environment:
-      SGX: -1
+      dockerfile: Dockerfile
     volumes:
       - ./network/:/network
-      - ./network-torpy/:/network-torpy
-      - ./dirs.py:/usr/local/lib/python3.8/dist-packages/torpy/dirs.py
-      - ./consesus.py:/usr/local/lib/python3.8/dist-packages/torpy/consesus.py

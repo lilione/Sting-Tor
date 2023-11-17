@@ -1,3 +1,7 @@
 .idea/
 *log
 *.data/
+*.token
+*.sig
+*.sgx
+*.manifest

@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+ARG GRAMINE_IMG_TAG=legacy-f160357
+FROM ghcr.io/initc3/gramine:${GRAMINE_IMG_TAG}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -62,8 +63,6 @@ RUN python3 -m venv $VENV_PATH
 WORKDIR /
 RUN git clone https://github.com/torproject/tor.git --branch tor-0.4.6.9
 WORKDIR /tor
-
-# RUN sh autogen.sh && ./configure && make test-network
 RUN sh autogen.sh && ./configure && make && make install
 
 WORKDIR /network

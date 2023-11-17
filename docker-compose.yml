@@ -8,5 +8,32 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    env_file: .env
+    depends_on:
+      aesmd:
+        condition: service_started
+    extends:
+      file: sgx-driver.yml
+      service: ${SGX_DRIVER}-enclave-devices
     volumes:
+      - aesmd-socket:/var/run/aesmd
       - ./network/:/network
+#      - ./network/gramine/Makefile:/tor
+    command: tail -F anything
+  aesmd:
+      image: ghcr.io/initc3/sgx-aesm:2.19-buster-81eb0d3
+      volumes:
+        - aesmd-socket:/var/run/aesmd
+      # NOTE set SGX_DRIVER in your .env file to "oot" or "inkernel"
+      # see README for more details
+      extends:
+        file: sgx-driver.yml
+        service: ${SGX_DRIVER}-aesmd-devices
+
+volumes:
+  aesmd-socket:
+    driver: local
+    driver_opts:
+      type: "tmpfs"
+      device: "tmpfs"
+      o: "rw"

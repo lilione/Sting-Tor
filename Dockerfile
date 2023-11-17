@@ -1,5 +1,4 @@
-ARG GRAMINE_IMG_TAG=legacy-f160357
-FROM ghcr.io/initc3/gramine:${GRAMINE_IMG_TAG}
+FROM gramineproject/gramine:v1.5
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -64,6 +63,9 @@ WORKDIR /
 RUN git clone https://github.com/torproject/tor.git --branch tor-0.4.6.9
 WORKDIR /tor
 RUN sh autogen.sh && ./configure && make && make install
+
+RUN gramine-sgx-gen-private-key
+RUN mkdir /usr/local/var
 
 WORKDIR /network
 CMD shadow --template-directory shadow.data.template shadow.yaml > shadow.log

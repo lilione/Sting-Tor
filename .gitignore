@@ -5,3 +5,4 @@
 *.sig
 *.sgx
 *.manifest
+.env
